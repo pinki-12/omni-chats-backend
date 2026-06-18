@@ -70,18 +70,12 @@ export const signin = async (req, res, next) => {
     }
     return res
       .status(200)
-      // .cookie("token", token, {
-      //   httpOnly: true,
-      //   secure: process.env.NODE_ENV === "development" ? false : true,
-      //   sameSite: process.env.NODE_ENV === "development" ? "strict" : "none",
-      //   maxAge: 7 * 24 * 60 * 60 * 1000,
-      // })
       .cookie("token", token, {
-  httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
-  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-  maxAge: 7 * 24 * 60 * 60 * 1000,
-})
+       httpOnly: true,
+       secure: process.env.NODE_ENV === "production",
+       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+       maxAge: 7 * 24 * 60 * 60 * 1000,
+       })
       .json({
         message: "signin successfully",
         data: {
