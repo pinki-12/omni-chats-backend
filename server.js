@@ -16,7 +16,7 @@ const server = http.createServer(app);
 //  socket server:
 const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:5173", "http://localhost:5174", "https://text07.vercel.app"],
+    origin: ["http://localhost:5173", "http://localhost:5174","https://omni-chats-frontend-z1ir.vercel.app"],
     credentials: true,
   },
 });
