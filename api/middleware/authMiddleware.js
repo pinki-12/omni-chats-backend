@@ -8,7 +8,7 @@ export const protect = async (req, res, next) => {
         message: "UnAuthorized",
       });
     }
-    const decoded = await jwt.verify(token, process.env.jwt_SECRET);
+    const decoded = await jwt.verify(token, process.env.JWT_SECRET);
     if (!decoded) {
       return res.status(404).json({
         message: "user not found",
