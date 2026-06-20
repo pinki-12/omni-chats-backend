@@ -82,6 +82,12 @@ export const signin = async (req, res, next) => {
           id: user._id,
           email: user.email,
           userName: user.userName,
+          // Also hand the token back directly. Browsers (mobile especially)
+          // increasingly block cross-site cookies between two different
+          // domains, so the frontend stores this and sends it back as an
+          // "Authorization: Bearer <token>" header on every request instead
+          // of relying solely on the cookie.
+          token,
         },
       });
   } catch (err) {
@@ -97,8 +103,8 @@ export const logout = async (req, res, next) => {
       .status(200)
       .clearCookie("token", {
         httpOnly: true,
-        secure: false,
-        sameSite: "strict",
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       })
       .json({
         message: "logout successfully",

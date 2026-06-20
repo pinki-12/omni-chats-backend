@@ -1,7 +1,14 @@
 import jwt from "jsonwebtoken";
 export const protect = async (req, res, next) => {
   try {
-    const token = req.cookies.token;
+    // Prefer the Authorization header (works on every browser, including
+    // mobile browsers that block cross-site cookies). Fall back to the
+    // cookie for same-origin/local-dev setups.
+    const authHeader = req.headers.authorization;
+    const headerToken = authHeader && authHeader.startsWith("Bearer ")
+      ? authHeader.split(" ")[1]
+      : null;
+    const token = headerToken || req.cookies.token;
 
     if (!token) {
       return res.status(401).json({
